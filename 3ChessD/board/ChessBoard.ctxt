@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=ChessBoard
+comment0.text=\r\n\ for\ (int\ i\ \=\ 0;\ i\ <\ 3;\ i++)\ {//z\r\nfor\ (int\ j\ \=\ 0;\ j\ <\ this.size;\ j++)\ {//y\r\nfor\ (int\ k\ \=\ 0;\ k\ <\ this.size;\ k++)\ {//x\r\nthis.board[k][j][i]\ \=\ new\ Rectangle();\r\nthis.board[k][j][i].changeSize(48,\ 48);\r\nif(i%2\ \=\=\ 0\ &&\ j%2\ \=\=\ 0\ &&\ k%2\ \=\=\ 0)\ \ {\r\nthis.board[k][j][i].changeColor("black");\r\nthis.board[k][j][i].changePosition(k*48,\ j*48);\r\n}\ else\ if(i%2\ \=\=\ 0\ &&\ j%2\ \=\=\ 0\ &&\ k%2\ \=\=\ 1){\r\nthis.board[k][j][i].changeColor("white");\r\nthis.board[k][j][i].changePosition(k*48,\ j*48);\r\n}else\ if(i%2\ \=\=\ 0\ &&\ j%2\ \=\=\ 1\ &&\ k%2\ \=\=\ 0){\r\nthis.board[k][j][i].changeColor("white");\r\nthis.board[k][j][i].changePosition(k*48,\ j*48);\r\n}else\ if(i%2\ \=\=\ 0\ &&\ j%2\ \=\=\ 1\ &&\ k%2\ \=\=\ 1){\r\nthis.board[k][j][i].changeColor("black");\r\nthis.board[k][j][i].changePosition(k*48,\ j*48);\r\n}\r\n\r\nelse\ if(i%2\ \=\=\ 1&&\ j%2\ \=\=\ 1\ &&\ k%2\ \=\=\ 1)\ \ {\r\nthis.board[k][j][i].changeColor("black");\r\nthis.board[k][j][i].changePosition(k*48,\ j*48);\r\n}\ else\ if(i%2\ \=\=\ 1\ &&\ j%2\ \=\=\ 1\ &&\ k%2\ \=\=\ 0){\r\nthis.board[k][j][i].changeColor("white");\r\nthis.board[k][j][i].changePosition(k*48,\ j*48);\r\n}else\ if(i%2\ \=\=\ 1\ &&\ j%2\ \=\=\ 0\ &&\ k%2\ \=\=\ 1){\r\nthis.board[k][j][i].changeColor("white");\r\nthis.board[k][j][i].changePosition(k*48,\ j*48);\r\n}else\ if(i%2\ \=\=\ 1\ &&\ j%2\ \=\=\ 0\ &&\ k%2\ \=\=\ 0){\r\nthis.board[k][j][i].changeColor("black");\r\nthis.board[k][j][i].changePosition(k*48,\ j*48);\r\n}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \r\n}\r\n}\r\n}\r\n\r\nfor\ (int\ j\ \=\ 0;\ j\ <\ this.size;\ j++)\ {//x\r\nfor\ (int\ k\ \=\ 0;\ k\ <\ this.size;\ k++)\ {//y\r\nthis.board[j][k][1].makeVisible();\ \ \ \ \ \ \ \ \ \ \r\n}\r\n}\r\n\ Write\ a\ description\ of\ class\ chessBoard\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=size
+comment1.target=ChessBoard(int)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ chessBoard\r\n
+comment2.params=
+comment2.target=void\ initializeBoard()
+comment3.params=g
+comment3.target=void\ draw(java.awt.Graphics)
+comment4.params=x1\ y1\ z1\ x2\ y2\ z2
+comment4.target=void\ isValidMove(int,\ int,\ int,\ int,\ int,\ int)
+comment5.params=layer
+comment5.target=void\ getLayer(int)
+comment6.params=x1\ y1\ z1\ x2\ y2\ z2
+comment6.target=void\ movePiece(int,\ int,\ int,\ int,\ int,\ int)
+numComments=7
