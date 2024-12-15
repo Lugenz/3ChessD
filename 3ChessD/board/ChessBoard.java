@@ -80,7 +80,7 @@ public class ChessBoard {
 
     private void initializeBoard() {        
         try {
-            this.board = ImageIO.read(new File("assets/boards/board_green.png"));
+            this.board = ImageIO.read(new File("3ChessD/assets/boards/board_green.png"));
         } catch (Exception e) {
             System.out.println("Failed to load image for the board");                
         }    
@@ -92,67 +92,67 @@ public class ChessBoard {
             if (i == 0) {
                 switch(j) {
                 case 0:
-                this.playBoard[0][0][0] = new ChessPiece(0, 0, 0, "rook", false);
+                this.playBoard[0][0][0] = new ChessPiece(0, 0, 0, PieceType.ROOK, false);
                 break;
                 case 1:
-                this.playBoard[1][0][0] = new ChessPiece(1, 0, 0, "knight", false);
+                this.playBoard[1][0][0] = new ChessPiece(1, 0, 0, PieceType.KNIGHT, false);
                 break;
                 case 2:
-                this.playBoard[2][0][0] = new ChessPiece(2, 0, 0, "bishop", false);
+                this.playBoard[2][0][0] = new ChessPiece(2, 0, 0, PieceType.BISHOP, false);
                 break;
                 case 3:
-                this.playBoard[3][0][0] = new ChessPiece(3, 0, 0, "king", false);
+                this.playBoard[3][0][0] = new ChessPiece(3, 0, 0, PieceType.KING, false);
                 break;
                 case 4:
-                this.playBoard[4][0][0] = new ChessPiece(4, 0, 0, "queen", false);
+                this.playBoard[4][0][0] = new ChessPiece(4, 0, 0, PieceType.QUEEN, false);
                 break;                        
                 case 5:
-                this.playBoard[5][0][0] = new ChessPiece(5, 0, 0, "bishop", false);
+                this.playBoard[5][0][0] = new ChessPiece(5, 0, 0, PieceType.BISHOP, false);
                 break;
                 case 6:
-                this.playBoard[6][0][0] = new ChessPiece(6, 0, 0, "knight", false);
+                this.playBoard[6][0][0] = new ChessPiece(6, 0, 0, PieceType.KNIGHT, false);
                 break;
                 case 7:
-                this.playBoard[7][0][0] = new ChessPiece(7, 0, 0, "rook", false);
+                this.playBoard[7][0][0] = new ChessPiece(7, 0, 0, PieceType.ROOK, false);
                 break;                                            
                 }
             }
             
             if (i == 1) {
-                this.playBoard[j][1][0] = new ChessPiece(j, 1, 0, "pawn", false);                    
+                this.playBoard[j][1][0] = new ChessPiece(j, 1, 0, PieceType.PAWN, false);                    
             } 
             
             if (i == 7) {
                 switch(j) {
                 case 0:
-                this.playBoard[0][7][0] = new ChessPiece(0, 7, 0, "rook", true);
+                this.playBoard[0][7][0] = new ChessPiece(0, 7, 0, PieceType.ROOK, true);
                 break;
                 case 1:
-                this.playBoard[1][7][0] = new ChessPiece(1, 7, 0, "knight", true);
+                this.playBoard[1][7][0] = new ChessPiece(1, 7, 0, PieceType.KNIGHT, true);
                 break;
                 case 2:
-                this.playBoard[2][7][0] = new ChessPiece(2, 7, 0, "bishop", true);
+                this.playBoard[2][7][0] = new ChessPiece(2, 7, 0, PieceType.BISHOP, true);
                 break;
                 case 3:
-                this.playBoard[3][7][0] = new ChessPiece(3, 7, 0, "king", true);
+                this.playBoard[3][7][0] = new ChessPiece(3, 7, 0, PieceType.KING, true);
                 break;
                 case 4:
-                this.playBoard[4][7][0] = new ChessPiece(4, 7, 0, "queen", true);
+                this.playBoard[4][7][0] = new ChessPiece(4, 7, 0, PieceType.QUEEN, true);
                 break;                        
                 case 5:
-                this.playBoard[5][7][0] = new ChessPiece(5, 7, 0, "bishop", true);
+                this.playBoard[5][7][0] = new ChessPiece(5, 7, 0, PieceType.BISHOP, true);
                 break;
                 case 6:
-                this.playBoard[6][7][0] = new ChessPiece(6, 7, 0, "knight", true);
+                this.playBoard[6][7][0] = new ChessPiece(6, 7, 0, PieceType.KNIGHT, true);
                 break;
                 case 7:
-                this.playBoard[7][7][0] = new ChessPiece(7, 7, 0, "rook", true);
+                this.playBoard[7][7][0] = new ChessPiece(7, 7, 0, PieceType.ROOK, true);
                 break;                                            
                 }
             }
             
             if (i == 6) {
-                this.playBoard[j][6][0] = new ChessPiece(j, 6, 0, "pawn", true);                    
+                this.playBoard[j][6][0] = new ChessPiece(j, 6, 0, PieceType.PAWN, true);                    
             } 
             }
         }
@@ -209,15 +209,34 @@ public class ChessBoard {
     }
     
     private boolean isValidMove(int x1, int y1, int z1, int x2, int y2, int z2) {
+        int movesDiagonal = this.playBoard[x1][y1][z1].getPiece().movesDiagonal;
+        int movesStraight = this.playBoard[x1][y1][z1].getPiece().movesStraight;
+
+        int movesStraightClickedX = Math.abs(x1 - x2);
+        int movesStraightClickedY = Math.abs(y1 - y2);
+
+        int movesDiagonalClicked = 9; //predvolená hodnota je 9, aby sa figúrka nepohla
+        int movesStraightClicked = 9;
+
+
+        
+        if (movesStraightClickedX == 0) { //kliknutý bod musí mať 1 súradnicu nulovú, alebo oboje rovnaké aby bol ťah legálny
+            movesStraightClicked = movesStraightClickedY;            
+        } else if (movesStraightClickedY == 0) {
+            movesStraightClicked = movesStraightClickedX;
+        } else if (movesStraightClickedX == movesStraightClickedY) {
+            movesDiagonalClicked = movesStraightClickedX;            
+        } 
+
+        if (movesStraightClicked <= movesStraight || movesDiagonalClicked <= movesDiagonal) { //ak je ťah legálny vzhľadom na enum figúrky, tak sa figúrka pohne                        
         if (this.playBoard[x1][y1][z1] != null && this.playBoard[x1][y1][z1].getColor() == this.colorMove) {
             if (this.playBoard[x2][y2][z2] != null && this.playBoard[x1][y1][z1].getColor() == this.playBoard[x2][y2][z2].getColor()) {
                 return false;
-            }
-
-            
+            }           
             this.colorMove = !this.colorMove;
             return true;
         }
+    }
         return false;
     }
 

@@ -5,7 +5,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public class ChessPiece {
-    private String piece; //might use an enum
+    private PieceType piece; //might use an enum
     private int x;
     private int y;
     private int z;
@@ -14,13 +14,13 @@ public class ChessPiece {
 
     static final double UPSCALER = 4.5;
 
-    public ChessPiece (int x, int y, int z, String piece, boolean color) {
+    public ChessPiece (int x, int y, int z, PieceType piece, boolean color) {
         this.x = x*72;
         this.y = y*72;
         this.z = z*72;
         this.color = color;
         this.piece = piece;
-        this.image = loadImage(piece, color);                      
+        this.image = loadImage(piece.name, color);                      
     }
     public int getX() {
         return this.x;
@@ -37,7 +37,7 @@ public class ChessPiece {
     public int getSize() {
         return (int)(image.getWidth()*UPSCALER);
     }
-    public String getPiece() {
+    public PieceType getPiece() {
         return this.piece;
     }
     public BufferedImage getImage() {
@@ -51,7 +51,7 @@ public class ChessPiece {
     }
 
     private BufferedImage loadImage(String piece, boolean color) {
-        String path = color ? "assets/white/" : "assets/black/";
+        String path = color ? "3ChessD/assets/white/" : "3ChessD/assets/black/";
         try {
             return ImageIO.read(new File(path + piece + ".png"));
         } catch (Exception e) {
@@ -59,4 +59,6 @@ public class ChessPiece {
             return null;
         }
     }
+
+    
 }
