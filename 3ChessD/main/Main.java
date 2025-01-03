@@ -15,7 +15,7 @@ public class Main {
         window.setTitle("3ChessD"); //názov okna
         window.setLocationRelativeTo(null); //okno sa zobrazí v strede obrazovky
         window.setVisible(true); //okno sa zobrazí
-        window.add(panel); //pridanie JPanel do JFrame
+        window.add(panel); //pridanie JPanel do JFrame(do okna)
         window.pack();
     }
 }

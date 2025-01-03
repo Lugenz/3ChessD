@@ -5,12 +5,13 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public class ChessPiece {
-    private PieceType piece; //might use an enum
+    private PieceType piece; //enum
     private int x;
     private int y;
     private int z;
     private boolean color;
     private BufferedImage image;
+    
 
     static final double UPSCALER = 4.5;
 
@@ -20,8 +21,9 @@ public class ChessPiece {
         this.z = z*72;
         this.color = color;
         this.piece = piece;
-        this.image = loadImage(piece.name, color);                      
+        this.image = loadImage(piece.name, color);                            
     }
+    
     public int getX() {
         return this.x;
     }
@@ -39,7 +41,8 @@ public class ChessPiece {
     }
     public PieceType getPiece() {
         return this.piece;
-    }
+    }   
+    
     public BufferedImage getImage() {
         return this.image;
     }

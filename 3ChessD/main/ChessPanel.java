@@ -43,9 +43,13 @@ public class ChessPanel extends JPanel implements Runnable{
             update();
             //DRAW: vykresli na obrazovku aktualizované informácie
             repaint(); //volá paintComponent
+            try {
+                Thread.sleep(1000/100); //60fps
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
-
 
     public void update() {
         this.board.update();
