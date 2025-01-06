@@ -1,7 +1,0 @@
-#BlueJ class context
-comment0.target=ChessPiece
-comment1.params=x\ y\ z\ piece\ color
-comment1.target=ChessPiece(int,\ int,\ int,\ java.lang.String,\ boolean)
-comment2.params=piece\ color
-comment2.target=fri.shapesge.Image\ getImage(java.lang.String,\ boolean)
-numComments=3
