@@ -5,13 +5,13 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public class ChessPiece {
-    private PieceType piece;                        //enum
+    private PieceType piece;                        // enum
     private int x;                                  // x-coordinate of the piece on the board
     private int y;                                  // y-coordinate of the piece on the board
     private boolean color;
     private BufferedImage image;
 
-    static final double UPSCALER = 1.2;             //scaling factor for 48x48 images
+    static final double UPSCALER = 1.2;             // scaling factor for 60x60 images
     /**
      * Constructs a ChessPiece with the specified position, type, and color.
      *
@@ -94,7 +94,7 @@ public class ChessPiece {
     }
 
     private BufferedImage loadImage(String piece, boolean color) {
-        String path = color ? "assets/white/" : "assets/black/";
+        String path = color ? "2ChessD/assets/white/" : "2ChessD/assets/black/";
         try {
             return ImageIO.read(new File(path + piece + ".png"));
         } catch (Exception e) {

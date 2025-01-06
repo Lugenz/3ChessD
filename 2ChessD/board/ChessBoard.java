@@ -43,14 +43,14 @@ public class ChessBoard {
         this.clickedX = 0;
         this.clickedY = 0;
 
-        this.whiteKingX = 4;                        //initial positions of the kings
+        this.whiteKingX = 4;                        // initial positions of the kings
         this.whiteKingY = 0;
         this.blackKingX = 4;
         this.blackKingY = 7;
         this.isCheck = false;
         this.isCastlingShort = false;
         this.isCastlingLong = false;
-        this.colorMove = true;                      //white starts
+        this.colorMove = true;                      // white starts
 
         this.initializeBoard();
 
@@ -168,15 +168,27 @@ public class ChessBoard {
         this.playBoard = playBoard;
     }
 
+    /**
+     * Sets the coordinates of the white king on the chessboard.
+     *
+     * @param x the x-coordinate of the white king
+     * @param y the y-coordinate of the white king
+     */
     public void setWhiteKingCoords(int x, int y) {
         this.whiteKingX = x;
         this.whiteKingY = y;
-    }
+        }
 
-    public void setBlackKingCoords(int x, int y) {
+        /**
+         * Sets the coordinates of the black king on the chessboard.
+         *
+         * @param x the x-coordinate of the black king
+         * @param y the y-coordinate of the black king
+         */
+        public void setBlackKingCoords(int x, int y) {
         this.blackKingX = x;
         this.blackKingY = y;
-    }
+        }
 
     /**
      * Initializes the chess board by loading the board image and placing the chess pieces
@@ -186,7 +198,7 @@ public class ChessBoard {
      */
     private void initializeBoard() {        
         try {
-            this.board = ImageIO.read(new File("assets/boards/board_green.png"));
+            this.board = ImageIO.read(new File("2ChessD/assets/boards/board_green.png"));
         } catch (Exception e) {
             System.out.println("Failed to load image for the board");                
         }    
@@ -307,17 +319,17 @@ public class ChessBoard {
      * @param g Graphics object, which is used to draw the pieces on the board, it is passed by the paintComponent method in class ChessPanel
      */   
     public void draw(Graphics g) { 
-        if (this.board != null) { //if the board image is loaded
+        if (this.board != null) {                                                   //if the board image is loaded
             g.drawImage(this.board, 0, 0, null); 
         }
 
-        if (this.clicked == 1) { //if a piece is selected       
+        if (this.clicked == 1) {                                                    //if a piece is selected       
             g.drawRect(this.clickedX * 72, this.clickedY * 72, 72, 72); //draws a rectangle around the selected piece
         }
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {                
-                if (this.playBoard[i][j] != null) { //if there is a piece on the tile
+                if (this.playBoard[i][j] != null) {                                 //if there is a piece on the tile
                     g.drawImage(this.playBoard[i][j].getImage(), this.playBoard[i][j].getX(), //draws the piece on the tile
                         this.playBoard[i][j].getY(), this.playBoard[i][j].getSize(),
                         this.playBoard[i][j].getSize(), null); 
@@ -335,17 +347,17 @@ public class ChessBoard {
      * @param y2 The destination Y coordinate of the piece.
      */
     public void movePiece(int x1, int y1, int x2, int y2) {
-        if (this.validator.isValidMove(x1, y1, x2, y2)) {                                   //if the move is valid             
+        if (this.validator.isValidMove(x1, y1, x2, y2)) {                     //if the move is valid             
             if (this.playBoard[x1][y1].getPiece() == PieceType.PAWN && (y2 == 0 || y2 == 7)) {                          //if the piece is a pawn and it reaches the end of the board
                 this.playBoard[x2][y2] = new ChessPiece(x2, y2, PieceType.QUEEN, this.playBoard[x1][y1].getColor());    //pawn is promoted to a queen            
-            } else if (this.isCastlingShort) {                                //if the king is castling short
-                this.playBoard[x1 + 1][y1] = this.playBoard[x2][y2];          //the rook is moved 1 tile to the left
+            } else if (this.isCastlingShort) {                              //if the king is castling short
+                this.playBoard[x1 + 1][y1] = this.playBoard[x2][y2];        //the rook is moved 1 tile to the left
                 this.playBoard[x1 + 1][y1].setPosition(x1 + 1, y1);
-                this.playBoard[x1 + 2][y1] = this.playBoard[x1][y1];          //the king is moved 2 tiles to the right
+                this.playBoard[x1 + 2][y1] = this.playBoard[x1][y1];        //the king is moved 2 tiles to the right
                 this.playBoard[x1 + 2][y1].setPosition(x1 + 2, y1);
 
-                if (this.playBoard[x1 + 2][y1].getColor()) {                  //if the white king is castling short
-                    this.whiteKingX = x1 + 2;                                 //updates the position of the white king in this class
+                if (this.playBoard[x1 + 2][y1].getColor()) {                //if the white king is castling short
+                    this.whiteKingX = x1 + 2;                               //updates the position of the white king in this class
                     this.whiteKingY = y1;
                 } else {
                     this.blackKingX = x1 + 2;
@@ -355,14 +367,14 @@ public class ChessBoard {
                 this.playBoard[x2][y2] = null;            
                 this.isCastlingShort = false;
 
-            } else if (this.isCastlingLong) {                                //if the king is castling long
+            } else if (this.isCastlingLong) {                               // if the king is castling long
                 this.playBoard[x1 - 1][y1] = this.playBoard[x2][y2];
                 this.playBoard[x1 - 1][y1].setPosition(x1 - 1, y1);
                 this.playBoard[x1 - 2][y1] = this.playBoard[x1][y1];
                 this.playBoard[x1 - 2][y1].setPosition(x1 - 2, y1);
 
-                if (this.playBoard[x1 - 2][y1].getColor()) {                  //if the white king is castling long
-                    this.whiteKingX = x1 - 2;                               //updates the position of the white king in this class
+                if (this.playBoard[x1 - 2][y1].getColor()) {                // if the white king is castling long
+                    this.whiteKingX = x1 - 2;                               // updates the position of the white king in this class
                     this.whiteKingY = y1;
                 } else {
                     this.blackKingX = x1 - 2;
@@ -371,13 +383,13 @@ public class ChessBoard {
 
                 this.playBoard[x2][y2] = null;
                 this.isCastlingLong = false;
-            } else {                                                        //normal move
+            } else {                                                        // normal move
                 this.playBoard[x2][y2] = this.playBoard[x1][y1];
                 this.playBoard[x2][y2].setPosition(x2, y2);
 
-                if (this.playBoard[x2][y2].getPiece() == PieceType.KING) {  //if the piece is a king
-                    if (this.playBoard[x2][y2].getColor()) {                //if the white king is moved
-                        this.whiteKingX = x2;                               //updates the position of the white king in this class
+                if (this.playBoard[x2][y2].getPiece() == PieceType.KING) {  // if the piece is a king
+                    if (this.playBoard[x2][y2].getColor()) {                // if the white king is moved
+                        this.whiteKingX = x2;                               // updates the position of the white king in this class
                         this.whiteKingY = y2;
                     } else {
                         this.blackKingX = x2;
@@ -398,9 +410,8 @@ public class ChessBoard {
             } else {
                 this.isCheck = false;
             }
-            this.colorMove = !this.colorMove;                               //switches color that is on turn 
+            this.colorMove = !this.colorMove;                               // switches color that is on turn 
         }      
-
     }
 }
 

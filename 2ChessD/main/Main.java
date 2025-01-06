@@ -20,8 +20,8 @@ public class Main {
         window = new JFrame();
         panel = new ChessPanel();
         
-        window.setTitle("2ChessD");           // window title
-        window.setResizable(false);       // the window cannot be resized   
+        window.setTitle("2ChessD");                 // window title
+        window.setResizable(false);                 // the window cannot be resized   
         window.add(panel);                          // add JPanel to JFrame (to the window)
         window.pack();                              // set the window size according to the size of JPanel
 
