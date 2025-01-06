@@ -21,10 +21,10 @@ public class ChessBoard {
     private int blackKingX;
     private int blackKingY;
     private boolean isCheck;
-
+    private boolean isCheckmate;
     private boolean isCastlingShort;
     private boolean isCastlingLong;
-
+    
     private boolean colorMove;
 
     /**
@@ -48,6 +48,7 @@ public class ChessBoard {
         this.blackKingX = 4;
         this.blackKingY = 7;
         this.isCheck = false;
+        this.isCheckmate = false;
         this.isCastlingShort = false;
         this.isCastlingLong = false;
         this.colorMove = true;                      // white starts
@@ -129,6 +130,15 @@ public class ChessBoard {
     }
 
     /**
+     * Checks if the current state of the chessboard is a checkmate.
+     *
+     * @return true if the current state is checkmate, false otherwise.
+     */
+    public boolean isCheckmate() {
+        return this.isCheckmate;
+    }
+   
+    /**
      * Sets the state of castling short.
      *@param castlingShort True if castling short is possible, false otherwise.
      */
@@ -179,13 +189,13 @@ public class ChessBoard {
         this.whiteKingY = y;
         }
 
-        /**
+    /**
          * Sets the coordinates of the black king on the chessboard.
          *
          * @param x the x-coordinate of the black king
          * @param y the y-coordinate of the black king
          */
-        public void setBlackKingCoords(int x, int y) {
+    public void setBlackKingCoords(int x, int y) {
         this.blackKingX = x;
         this.blackKingY = y;
         }
@@ -347,11 +357,11 @@ public class ChessBoard {
      * @param y2 The destination Y coordinate of the piece.
      */
     public void movePiece(int x1, int y1, int x2, int y2) {
-        if (this.validator.isValidMove(x1, y1, x2, y2)) {                     //if the move is valid             
-            if (this.playBoard[x1][y1].getPiece() == PieceType.PAWN && (y2 == 0 || y2 == 7)) {                          //if the piece is a pawn and it reaches the end of the board
-                this.playBoard[x2][y2] = new ChessPiece(x2, y2, PieceType.QUEEN, this.playBoard[x1][y1].getColor());    //pawn is promoted to a queen            
-            } else if (this.isCastlingShort) {                              //if the king is castling short
-                this.playBoard[x1 + 1][y1] = this.playBoard[x2][y2];        //the rook is moved 1 tile to the left
+        if (this.validator.isValidMove(x1, y1, x2, y2)) {                     // if the move is valid             
+            if (this.playBoard[x1][y1].getPiece() == PieceType.PAWN && (y2 == 0 || y2 == 7)) {                          // if the piece is a pawn and it reaches the end of the board
+                this.playBoard[x2][y2] = new ChessPiece(x2, y2, PieceType.QUEEN, this.playBoard[x1][y1].getColor());    // pawn is promoted to a queen            
+            } else if (this.isCastlingShort) {                              // if the king is castling short
+                this.playBoard[x1 + 1][y1] = this.playBoard[x2][y2];        // the rook is moved 1 tile to the left
                 this.playBoard[x1 + 1][y1].setPosition(x1 + 1, y1);
                 this.playBoard[x1 + 2][y1] = this.playBoard[x1][y1];        //the king is moved 2 tiles to the right
                 this.playBoard[x1 + 2][y1].setPosition(x1 + 2, y1);
@@ -399,13 +409,10 @@ public class ChessBoard {
             }  
             this.playBoard[x1][y1] = null;
 
-            if (this.validator.isInCheck(!this.colorMove)) {
+            if (this.validator.isInCheck(!this.colorMove) && !this.validator.isCheckingCheckmate()) {                // if the opponent is in check
                 this.isCheck = true;
-                System.out.println((!this.playBoard[x2][y2].getColor() ? "White" : "Black") + " king is in check!");
-
-                if (this.validator.isCheckmate(!this.colorMove)) {
-                    System.out.println((this.colorMove ? "White" : "Black") + " wins!");
-                    System.exit(0); 
+                if (this.validator.isCheckmate(!this.colorMove)) {          // if the opponent is in checkmate
+                    this.isCheckmate = true;
                 }
             } else {
                 this.isCheck = false;

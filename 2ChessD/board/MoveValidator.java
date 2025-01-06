@@ -2,16 +2,27 @@ package board;
 
 public class MoveValidator {
     private ChessBoard board;
-
+    private String checkedBy;
+    private boolean checkingCheckmate;
     /**
      * Constructor for MoveValidator.
      * 
      * @param board The chessboard to be used for validation.
      */
     public MoveValidator(ChessBoard board) {
-        this.board = board;
-    }
+        this.board = board;        
+        this.checkedBy = "";
+        this.checkingCheckmate = false;
+        }
 
+      /**
+         * Returns whether the validator is currently checking for checkmate.
+         * 
+         * @return true if checking for checkmate, false otherwise.
+         */
+        public boolean isCheckingCheckmate() {
+            return this.checkingCheckmate;
+        }  
     /**
      * Checks if the king of the given color is in check.
      * 
@@ -32,11 +43,13 @@ public class MoveValidator {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {               
                 if (this.board.getPlayBoard()[i][j] != null
-                    && this.board.getPlayBoard()[i][j].getColor() != color) {                       //if the tile has a piece and the color of the piece is different from the color of the king
-                    if (this.isValidMove(i, j, kingX, kingY)) {                                      //if the piece can "capture" the king
+                    && this.board.getPlayBoard()[i][j].getColor() != color) {
+                        this.board.setCheck(false);                     //if the tile has a piece and the color of the piece is different from the color of the king
+                        if (this.isValidMove(i, j, kingX, kingY)) {                                      //if the piece can "capture" the king
                         System.out.print("Check! By ");
                         System.out.println(this.board.getPlayBoard()[i][j].getPiece().getName());
-                        this.board.setCheck(true);
+                        System.out.println("" + i + j);
+                        this.checkedBy = this.board.getPlayBoard()[i][j].getPiece().getName();                       
                         return true;
                     }
                 }
@@ -63,41 +76,42 @@ public class MoveValidator {
                 }
             }
         }
-        boolean color = this.board.getColorMove();                                 //save the color of the player on turn
-        this.board.setCheck(false);                                        //set the check to false for the simulation
-        this.board.movePiece(x1, y1, x2, y2);                                    //simulate moving the piece
 
+        boolean color = this.board.getColorMove();                                 //save the color of the player on turn
+        this.board.setCheck(false);                                    //set the check to false for the simulation
+        this.board.movePiece(x1, y1, x2, y2);                                    //simulate moving the piece
+        
+        
         if (this.isInCheck(color)) {                                 //if the move puts the king in check again
             this.board.setPlayBoard(tempBoard);                                  //reset the board to the previous state
             this.board.setCheck(true);  
             this.board.setColorMove(color);                                   //set the check back to original state
-
             return false;
         } else {
             this.board.setPlayBoard(tempBoard);
             this.board.setCheck(true);
             this.board.setColorMove(color); 
-
             return true;
         }
 
     }
 
     public boolean isCheckmate(boolean color) {
+        String checkedByTemp = this.checkedBy;                                                                          //save the piece that checks the king
+        this.checkingCheckmate = true;
+        this.board.setColorMove(color);                                                                                 //set the color of the player on turn for simulation
 
-        this.board.setColorMove(color);
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (this.board.getPlayBoard()[i][j] != null && this.board.getPlayBoard()[i][j].getColor() == color) {               //if the tile has a piece and the color of the piece is the same as the color of the king
+                if (this.board.getPlayBoard()[i][j] != null && this.board.getPlayBoard()[i][j].getColor() == color) {   //if the tile has a piece and the color of the piece is the same as the color of the king
                     for (int k = 0; k < 8; k++) {
-                        for (int l = 0; l < 8; l++) {
-
-                            if (this.isValidMove(i, j, k, l)) { 
-                                System.out.println("33333");
+                        for (int l = 0; l < 8; l++) {                            
+                            if (this.isValidMove(i, j, k, l) && this.checkedBy.equals(checkedByTemp) && this.removesCheck(i,j,k,l)) {                 //if the move is valid and the king is still in check by the same piece                                
+                                System.out.println(this.removesCheck(i, j, k, l));
                                 System.out.println(this.board.getPlayBoard()[i][j].getPiece().getName());
-                                System.out.println(i + " " + j + " to " + k + " " + l);  
-                                this.board.setColorMove(!color); 
-
+                                System.out.println(i + " " + j + " to " + k + " " + l);                                 //possible move that removes the check (just for testing)
+                                this.board.setColorMove(!color);                                                        //switch the color of the player on turn back to the original                                    
+                                this.checkingCheckmate = false;                                                      
                                 return false;                                                                       
                             }
                         }
@@ -105,8 +119,6 @@ public class MoveValidator {
                 }
             }
         }
-
-        this.board.setColorMove(!color); 
         return true;
     }
 
@@ -396,9 +408,8 @@ public class MoveValidator {
         }
 
         //VERIFICATION OF UNCHECKING THE KING
-        if (this.board.isCheck()) {       
-            System.out.println("pipik");                                                //if is in check            
-            if (!this.removesCheck(x1, y1, x2, y2)) {                                              //verify if the move removes the check               
+        if (this.board.isCheck()) {                                                     //if is in check            
+            if (!this.removesCheck(x1, y1, x2, y2)) {                                   //verify if the move removes the check               
                 return false;
             }
         }      

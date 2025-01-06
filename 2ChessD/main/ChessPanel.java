@@ -84,22 +84,34 @@ public class ChessPanel extends JPanel implements Runnable {
         g.setFont(new Font("Arial", Font.BOLD, 12));
         g.drawString("2ChessD 1.0.0, made by Lukáš Rakovan, 2025", 10, 653 + 12);   // prints out the version and author of the game
         
-            
+        
         if(this.board.getColorMove()) {
             g.setColor(Color.white);
-            g.fillRect(506, 591, 50, 50);
-            g.drawRect(506, 591, 50, 50);
-            g.drawString("White" + "'s move ", 496, 646 + 12);                          // prints out whose move it is                
-            if (this.board.isCheck()) {
-                g.drawImage(this.gameState1, 10, 591, null);                // draws the check image
+                if (this.board.isCheckmate()) {
+                    g.setFont(new Font("Arial", Font.BOLD, 28));
+                    g.drawString("Checkmate! White wins!", 125, 600 + 28);
+                    this.thread = null;                                                         // stops the game thread
+                } else {               
+                g.fillRect(506, 591, 50, 50);
+                g.drawRect(506, 591, 50, 50);
+                g.drawString("White" + "'s move ", 490, 646 + 12);                          // prints out whose move it is                
+                if (this.board.isCheck()) {
+                    g.drawImage(this.gameState1, 10, 591, null);                // draws the check image
+                }
             }
         } else {
-                g.setColor(Color.black);
-                g.fillRect(506, 591, 50, 50);
-                g.drawRect(506, 591, 50, 50);   
-                g.drawString("Black" + "'s move ", 496, 646 + 12);              
-                if (this.board.isCheck()) {
-                    g.drawImage(this.gameState2, 10, 591, null);
+            g.setColor(Color.black);
+            if (this.board.isCheckmate()) {
+                g.setFont(new Font("Arial", Font.BOLD, 28));
+                g.drawString("Checkmate! Black wins!", 125, 600 + 28); 
+                this.thread = null;                                                               
+            } else {                   
+                    g.fillRect(506, 591, 50, 50);
+                    g.drawRect(506, 591, 50, 50);   
+                    g.drawString("Black" + "'s move ", 490, 646 + 12);              
+                    if (this.board.isCheck()) {
+                        g.drawImage(this.gameState2, 10, 591, null);
+                    }
                 }
             }  
         g.dispose();                                                                    // releases resources that g occupies in memory (no longer needed)
