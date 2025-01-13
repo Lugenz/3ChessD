@@ -1,2 +1,2 @@
-# 3ChessD
-3 - dimensional chess game, move on x, y and z!
+# 2ChessD
+2 - dimensional chess game, made in Java, from scratch.
