@@ -24,13 +24,13 @@ public class ChessPanel extends JPanel implements Runnable {
      * Adds a mouse listener and starts the game thread.
      */
     public ChessPanel() {       
-        this.setPreferredSize(new Dimension(576, 672));             // size of JPanel
-        this.setBackground(new Color(102, 66, 40));                        // wood brown color
+        this.setPreferredSize(new Dimension(576, 672));                         // size of JPanel
+        this.setBackground(new Color(102, 66, 40));                             // wood brown color
         this.setDoubleBuffered(true);
 
         try {
-            this.gameState1 = ImageIO.read(new File("2ChessD/assets/white/gameState1.png"));
-            this.gameState2 = ImageIO.read(new File("2ChessD/assets/black/gameState2.png"));
+            this.gameState1 = ImageIO.read(new File("assets/white/gameState1.png"));
+            this.gameState2 = ImageIO.read(new File("assets/black/gameState2.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,7 +56,7 @@ public class ChessPanel extends JPanel implements Runnable {
 
             repaint();                                                          //draws the updated game (calls paintComponent)
             try {
-                Thread.sleep(1000 / 100);                                       //60fps
+                Thread.sleep(1000 / 100);                                       //100fps
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -82,21 +82,21 @@ public class ChessPanel extends JPanel implements Runnable {
         this.board.draw(g);                                                             // draws the board 
                                                                                                            
         g.setFont(new Font("Arial", Font.BOLD, 12));
-        g.drawString("2ChessD 1.0.0, made by Lukáš Rakovan, 2025", 10, 653 + 12);   // prints out the version and author of the game
+        g.drawString("2ChessD 1.0.0, made by Lukáš Rakovan, 2025", 10, 653 + 12);       // prints out the version and author of the game
         
         
-        if(this.board.getColorMove()) {
+        if (this.board.getColorMove()) {
             g.setColor(Color.white);
-                if (this.board.isCheckmate()) {
-                    g.setFont(new Font("Arial", Font.BOLD, 28));
-                    g.drawString("Checkmate! White wins!", 125, 600 + 28);
-                    this.thread = null;                                                         // stops the game thread
-                } else {               
+            if (this.board.isCheckmate()) {
+                g.setFont(new Font("Arial", Font.BOLD, 28));
+                g.drawString("Checkmate! White wins!", 125, 600 + 28);
+                this.thread = null;                                                     // stops the game thread
+            } else {               
                 g.fillRect(506, 591, 50, 50);
                 g.drawRect(506, 591, 50, 50);
-                g.drawString("White" + "'s move ", 490, 646 + 12);                          // prints out whose move it is                
+                g.drawString("White" + "'s move ", 490, 646 + 12);                      // prints out whose move it is                
                 if (this.board.isCheck()) {
-                    g.drawImage(this.gameState1, 10, 591, null);                // draws the check image
+                    g.drawImage(this.gameState1, 10, 591, null);                        // draws the check image
                 }
             }
         } else {
@@ -106,14 +106,14 @@ public class ChessPanel extends JPanel implements Runnable {
                 g.drawString("Checkmate! Black wins!", 125, 600 + 28); 
                 this.thread = null;                                                               
             } else {                   
-                    g.fillRect(506, 591, 50, 50);
-                    g.drawRect(506, 591, 50, 50);   
-                    g.drawString("Black" + "'s move ", 490, 646 + 12);              
-                    if (this.board.isCheck()) {
-                        g.drawImage(this.gameState2, 10, 591, null);
-                    }
+                g.fillRect(506, 591, 50, 50);
+                g.drawRect(506, 591, 50, 50);   
+                g.drawString("Black" + "'s move ", 490, 646 + 12);              
+                if (this.board.isCheck()) {
+                    g.drawImage(this.gameState2, 10, 591, null);
                 }
-            }  
+            }
+        }  
         g.dispose();                                                                    // releases resources that g occupies in memory (no longer needed)
     }
 }

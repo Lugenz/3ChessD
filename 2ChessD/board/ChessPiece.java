@@ -94,7 +94,7 @@ public class ChessPiece {
     }
 
     private BufferedImage loadImage(String piece, boolean color) {
-        String path = color ? "2ChessD/assets/white/" : "2ChessD/assets/black/";
+        String path = color ? "assets/white/" : "assets/black/";
         try {
             return ImageIO.read(new File(path + piece + ".png"));
         } catch (Exception e) {

@@ -24,7 +24,7 @@ public class ChessBoard {
     private boolean isCheckmate;
     private boolean isCastlingShort;
     private boolean isCastlingLong;
-    
+
     private boolean colorMove;
 
     /**
@@ -137,7 +137,7 @@ public class ChessBoard {
     public boolean isCheckmate() {
         return this.isCheckmate;
     }
-   
+
     /**
      * Sets the state of castling short.
      *@param castlingShort True if castling short is possible, false otherwise.
@@ -187,18 +187,18 @@ public class ChessBoard {
     public void setWhiteKingCoords(int x, int y) {
         this.whiteKingX = x;
         this.whiteKingY = y;
-        }
+    }
 
     /**
-         * Sets the coordinates of the black king on the chessboard.
-         *
-         * @param x the x-coordinate of the black king
-         * @param y the y-coordinate of the black king
-         */
+     * Sets the coordinates of the black king on the chessboard.
+     *
+     * @param x the x-coordinate of the black king
+     * @param y the y-coordinate of the black king
+     */
     public void setBlackKingCoords(int x, int y) {
         this.blackKingX = x;
         this.blackKingY = y;
-        }
+    }
 
     /**
      * Initializes the chess board by loading the board image and placing the chess pieces
@@ -208,7 +208,7 @@ public class ChessBoard {
      */
     private void initializeBoard() {        
         try {
-            this.board = ImageIO.read(new File("2ChessD/assets/boards/board_green.png"));
+            this.board = ImageIO.read(new File("assets/boards/board_green.png"));
         } catch (Exception e) {
             System.out.println("Failed to load image for the board");                
         }    
@@ -334,7 +334,7 @@ public class ChessBoard {
         }
 
         if (this.clicked == 1) {                                                    //if a piece is selected       
-            g.drawRect(this.clickedX * 72, this.clickedY * 72, 72, 72); //draws a rectangle around the selected piece
+            g.drawRect(this.clickedX * 72, this.clickedY * 72, 72, 72);             //draws a rectangle around the selected piece
         }
 
         for (int i = 0; i < 8; i++) {
@@ -357,7 +357,7 @@ public class ChessBoard {
      * @param y2 The destination Y coordinate of the piece.
      */
     public void movePiece(int x1, int y1, int x2, int y2) {
-        if (this.validator.isValidMove(x1, y1, x2, y2)) {                     // if the move is valid             
+        if (this.validator.isValidMove(x1, y1, x2, y2)) {                   // if the move is valid             
             if (this.playBoard[x1][y1].getPiece() == PieceType.PAWN && (y2 == 0 || y2 == 7)) {                          // if the piece is a pawn and it reaches the end of the board
                 this.playBoard[x2][y2] = new ChessPiece(x2, y2, PieceType.QUEEN, this.playBoard[x1][y1].getColor());    // pawn is promoted to a queen            
             } else if (this.isCastlingShort) {                              // if the king is castling short
